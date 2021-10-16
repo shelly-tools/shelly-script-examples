@@ -1,8 +1,21 @@
- // this is the remote shelly which we want to control.
+/**
+ * @copyright shelly-tools contributors
+ * @license   GNU Affero General Public License (https://www.gnu.org/licenses/agpl-3.0.de.html)
+ * @authors   https://github.com/shelly-tools/shelly-script-examples/graphs/contributors
+ *
+ * This script can emulate a cycle switch for a remote Shelly 2.5 in roller shutter mode
+ * with a Shelly Plus device.
+ * Once the button is pushed it checks the former direction and sends a open, stop or close 
+ * command to the remote Shelly 2.5.
+ */
+ 
+// CONFIG START
+// this is the remote shelly which we want to control.
 
  let REMOTE = {
      ip: '192.168.178.209',
  };
+// CONFIG END
 
  // no need to change anything below this line..
 
