@@ -17,6 +17,7 @@ let REMOTE = {
 // button sequence 
 // The demo sequence is: on and blue with max brightness, then red, green, yellow, purple, off
 let colorsequence = [
+   '?turn=on&gain=100&blue=0&red=255&green=120', // warm white
    '?turn=on&gain=100&blue=255&red=0&green=0', // blue
    '?turn=on&gain=100&blue=0&red=255&green=0', // red
    '?turn=on&gain=100&blue=0&red=0&green=255', // green
