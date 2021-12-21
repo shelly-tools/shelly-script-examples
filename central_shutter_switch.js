@@ -3,10 +3,13 @@
  * @license   GNU Affero General Public License (https://www.gnu.org/licenses/agpl-3.0.de.html)
  * @authors   https://github.com/shelly-tools/shelly-script-examples/graphs/contributors
  *
- * This script can emulate a cycle switch for a remote Shelly 2.5 in roller shutter mode
- * with a Shelly Plus device.
- * Once the button is pushed it checks the former direction and sends a open, stop or close 
+ * This script can be used for central shutter control.
+ * You'd need a Shelly Plus device with two buttons connected, e.g. the new Shelly Plus I4.
+ * Once a button is pushed it checks the current state of a "master" shelly and sends a open, stop or close 
  * command to the remote Shelly 2.5.
+ * 
+ * the master Shelly is used to determine if there's a open, close or stop command needed. Additional Shellies
+ * can be controlled by editing the shutters array.
  */
  
 // CONFIG START
@@ -20,10 +23,10 @@ let CONFIG = {
     direction2: 'close',
 };
 
-// additinal Shutters 
+// additional Shutters 
 let shutters = [
-    '192.168.178.204', // Shutter Lving room door
-    '192.168.178.206',
+    '192.168.178.204', // Shutter Living room back door
+    '192.168.178.206', // Shutter Living room back window
 ];
 // CONFIG END
 
