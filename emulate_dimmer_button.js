@@ -11,6 +11,8 @@
 // IP address or hostname from Shelly Dimmer device
 let REMOTE = {
     ip: '192.168.178.240',
+    input: 0,
+    
 };
 // CONFIG END 
 
@@ -21,7 +23,7 @@ Shelly.addEventHandler(
     function (event, user_data) {
         //print(JSON.stringify(event));
         if (typeof event.info.event !== 'undefined') {
-           if (dim === true && event.info.event === 'btn_up') {
+           if (dim === true && event.info.event === 'btn_up' && event.info.id === REMOTE.input) {
                dim = false;
                print("release");
                Shelly.call(
@@ -33,7 +35,7 @@ Shelly.addEventHandler(
                );
            }
 
-           if (event.info.event === 'single_push') {
+           if (event.info.event === 'single_push' && event.info.id === REMOTE.input) {
                Shelly.call(
                    "http.get", {
                        url: 'http://' + REMOTE.ip + '/light/0?turn=toggle'
@@ -41,7 +43,7 @@ Shelly.addEventHandler(
                    function (response, error_code, error_message, ud) {},
                    null
                );
-           } else if (event.info.event === 'double_push') {
+           } else if (event.info.event === 'double_push' && event.info.id === REMOTE.input) {
                Shelly.call(
                    "http.get", {
                        url: 'http://' + REMOTE.ip + '/light/0?turn=on&brightness=100'
