@@ -7,12 +7,21 @@ let CONFIG = {
 };
 
 // Set Switch detached
-Shelly.call("Switch.SetConfig", {
-    id: CONFIG.switchId,
+Shelly.call("Input.SetConfig", {
+    id: 0,
     config: {
-      in_mode: "detached",
+        type: "button",
     },
-  });
+});
+
+Shelly.call("Switch.SetConfig", {
+    id: 0,
+    config: {
+        in_mode: "detached",
+        initial_state: "on"
+    },
+});
+
 
 // add an evenHandler 
 Shelly.addEventHandler(
