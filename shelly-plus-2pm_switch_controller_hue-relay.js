@@ -41,7 +41,7 @@ Shelly.call("Switch.SetConfig", {
     id: 0,
     config: {
         in_mode: "detached",
-        initial_state: "on"
+        initial_state: "restore_last"
     },
 });
 
@@ -58,7 +58,7 @@ Shelly.call("Switch.SetConfig", {
     id: 1,
     config: {
         in_mode: "detached",
-        initial_state: "on"
+        initial_state: "restore_last"
     },
 });
 
