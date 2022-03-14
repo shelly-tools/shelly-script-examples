@@ -74,7 +74,10 @@ function Toggle(state) {
     Shelly.call(
         "http.request", {
         method: "PUT",
-        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/lights/' + CONFIG.light + '/state',
+        headers: {
+            "hue-application-key": "S4DAeeXgjRj92sTwu7uNm6m7cqCz0dAyDNaDi0IO"
+         },
+        url: 'http://' + CONFIG.ip + '/clip/v2/resource/light/' + CONFIG.light,
         body: b
     },
         function (r, e, m) {
