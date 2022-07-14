@@ -6,3 +6,8 @@ This script can be used for central shutter control. You need a Shelly Plus devi
 emulate_dimmer_button.js: Remote Control for Shelly Dimmer 
 ===
 This script is intended to remote control a Shelly Dimmer / Dimmer2 and emulates the locally connected button. short_press = on/off toggle, double_press = on with 100% brightness, long_press cylce between dimming and brightening.
+
+
+delayed_on_off.js: Delayed on with auto off example
+===
+This script adds a X seconds delayed on and turns the relay off after 5 seconds. Values for on and off can be configured. 
