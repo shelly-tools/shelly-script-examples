@@ -10,4 +10,14 @@ This script is intended to remote control a Shelly Dimmer / Dimmer2 and emulates
 
 delayed_on_off.js: Delayed on with auto off example
 ===
-This script adds a X seconds delayed on and turns the relay off after 5 seconds. Values for on and off can be configured. 
+This script adds a X seconds delayed on and turns the relay off after 5 seconds. Values for on and off can be configured.
+
+
+control_rgbw.js: Control a shelly RGBW2 or Shelly Duo RBGW
+===
+This script is a more complex example how to control a Shelly RGBW or a Shelly Duo RGBW via script. Single push is used to turn on/off the device, double push rotates between a predifined set of colours, long push is used to dim the device via 20% steps.
+
+
+cycle_rgbw_colors.js: Color rotation example for Shelly RGBW2/Shelly Duo RGBW
+===
+The script is a simple example how to rotate colors from a Shelly RGBW2/Shelly Duo RGBW via single push.
