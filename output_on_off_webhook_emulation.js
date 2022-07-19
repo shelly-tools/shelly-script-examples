@@ -22,12 +22,12 @@ let REMOTE = {
 
 Shelly.addEventHandler(
     function (event, user_data) {
-        if (typeof event.info.output !== 'undefined') {
-            if (event.info.id === 0 && event.info.output === true) {
+        if (typeof event.info.state !== 'undefined') {
+            if (event.info.id === 0 && event.info.state === true) {
                 Toggle(REMOTE.ip, REMOTE.relay, 'on');
             }
 
-            if (event.info.id === 0 && event.info.output === false) {
+            if (event.info.id === 0 && event.info.state === false) {
                 Toggle(REMOTE.ip, REMOTE.relay, 'off'); 
             }                              
         } else {
