@@ -10,7 +10,7 @@
 // Array of dimmers to be controlled
 let dimmer = [
     '192.168.178.166', // dimmer controlled with button 0 
-    '192.168.178.240', // dimmer controlled with button 0 
+    '192.168.178.240', // dimmer controlled with button 1 
 ];
 // CONFIG END 
 
