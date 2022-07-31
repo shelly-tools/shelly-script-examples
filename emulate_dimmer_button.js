@@ -51,7 +51,7 @@ Shelly.addEventHandler(
                    function (response, error_code, error_message, ud) {},
                    null
                );
-           } else if (event.info.event === 'long_push') {
+           } else if (event.info.event === 'long_push' && event.info.id === REMOTE.input) {
                    dim = true;
                    print("cycle");
                    Shelly.call(
