@@ -34,41 +34,27 @@ Shelly.addEventHandler(
         if (typeof event.info.state !== 'undefined' && event.info.id === CONFIG.input1) {
             if (event.info.state) {
                 if (CONFIG.recent) {
-                    BrightLight();
+                    SetLight('{"ct": 500, "bri": 254, "on": true}');
                 } else {
                     CONFIG.recent = true
                     Timer.set(15 * 1000, false, ClearRecent)
-                    SetLight("true");
+                    SetLight('{"on": true}');
                 }
             } else {
-                SetLight("false");
+                SetLight('{"on": false}');
             }
         }
     },
+    null,
 );
 
-function BrightLight() {
+function SetLight(b) {
     Shelly.call(
         "http.request", {
-        method: "PUT",
-        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/groups/' + CONFIG.groups + '/action',
-        body: '{"ct": 500, "bri": 254, "on": true}'
-    },
-        function (r, e, m) {
+            method: "PUT",
+            url: 'http://'+ CONFIG.ip +'/api/'+ CONFIG.user +'/groups/'+ CONFIG.groups +'/action',
+            body: b
         },
-        null
-    );
-}
-
-function SetLight(state) {
-    let b = '{"on": ' + state + '}';
-
-    Shelly.call(
-        "http.request", {
-        method: "PUT",
-        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/groups/' + CONFIG.groups + '/action',
-        body: b
-    },
         function (r, e, m) {
         },
         null
