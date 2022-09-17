@@ -1,9 +1,15 @@
 let CONFIG = {
-    ip: '192.168.178.168', //Hue Bridge IP
-    user: 'S4DAeeXgjRj92sTwu7uNm6m7cqCz0dAyDNaDi0IO', //Hue Bridge API user
-    light: '2', // Hue Light ID
+    ip: '192.168.<ip.number>', //Hue Bridge IP
+    user: '<api-key>', //Hue Bridge API user
+    groups: '3', // Hue Groups ID
     input1: 0, // Shelly Button ID
+    recent: false // has been recently turned on
 };
+
+// Callback to clear recent
+function ClearRecent() {
+    CONFIG.recent = false
+}
 
 // Set Switch detached
 Shelly.call("Input.SetConfig", {
@@ -25,42 +31,42 @@ Shelly.call("Switch.SetConfig", {
 // add an evenHandler 
 Shelly.addEventHandler(
     function (event, user_data) {
-       
-        if (typeof event.info.state !== 'undefined') {
-          if (event.info.id === CONFIG.input1) {
-                // Get the current light state
-                Shelly.call(
-                    "http.request", {
-                    method: "GET",
-                    url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/lights/' + CONFIG.light,
-                },
-                    function (res, error_code, error_message, ud) {
-                        let st = JSON.parse(res.body);
-                        if (st.state.on === true) {
-                            Toggle("false");
-                        } else {
-                            Toggle("true");
-
-                        }
-                    },
-                    null
-                );
+        if (typeof event.info.state !== 'undefined' && event.info.id === CONFIG.input1) {
+            if (event.info.state) {
+                if (CONFIG.recent) {
+                    BrightLight();
+                } else {
+                    CONFIG.recent = true
+                    Timer.set(15 * 1000, false, ClearRecent)
+                    SetLight("true");
+                }
             } else {
-                return true;
+                SetLight("false");
             }
-        } else {
-            return true;
         }
     },
 );
 
-function Toggle(state) {
+function BrightLight() {
+    Shelly.call(
+        "http.request", {
+        method: "PUT",
+        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/groups/' + CONFIG.groups + '/action',
+        body: '{"ct": 500, "bri": 254, "on": true}'
+    },
+        function (r, e, m) {
+        },
+        null
+    );
+}
+
+function SetLight(state) {
     let b = '{"on": ' + state + '}';
 
     Shelly.call(
         "http.request", {
         method: "PUT",
-        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/lights/' + CONFIG.light + '/state',
+        url: 'http://' + CONFIG.ip + '/api/' + CONFIG.user + '/groups/' + CONFIG.groups + '/action',
         body: b
     },
         function (r, e, m) {
