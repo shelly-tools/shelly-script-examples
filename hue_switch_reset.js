@@ -2,8 +2,9 @@ let CONFIG = {
     ip: '192.168.<ip.number>', //Hue Bridge IP
     user: '<api-key>', //Hue Bridge API user
     groups: '3', // Hue Groups ID
-    input1: 0, // Shelly Button ID
-    recent: false // has been recently turned on
+    input1: 0, // Shelly Switch ID
+    recent: false, // has been recently turned on
+    recent_sec: 15 // number of seconds to consider recent
 };
 
 // Callback to clear recent
@@ -13,14 +14,14 @@ function ClearRecent() {
 
 // Set Switch detached
 Shelly.call("Input.SetConfig", {
-    id: 0,
+    id: CONFIG.input1,
     config: {
         type: "switch",
     },
 });
 
 Shelly.call("Switch.SetConfig", {
-    id: 0,
+    id: CONFIG.input1,
     config: {
         in_mode: "detached",
         initial_state: "on"
@@ -37,7 +38,7 @@ Shelly.addEventHandler(
                     SetLight('{"ct": 500, "bri": 254, "on": true}');
                 } else {
                     CONFIG.recent = true
-                    Timer.set(15 * 1000, false, ClearRecent)
+                    Timer.set(CONFIG.recent_sec * 1000, false, ClearRecent)
                     SetLight('{"on": true}');
                 }
             } else {
