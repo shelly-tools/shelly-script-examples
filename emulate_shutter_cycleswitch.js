@@ -16,7 +16,8 @@
 let CONFIG = {
     ip: '192.168.178.209',
     input: 0,
-    btnevent: 'single_push'
+    btnevent1: 'btn_down',
+    btnevent2: 'btn_up'
 };
 // CONFIG END
 
@@ -27,7 +28,7 @@ Shelly.addEventHandler(
     function (event, user_data) {
         //print(JSON.stringify(event));
         if (typeof event.info.event !== 'undefined') {
-            if (event.info.id === CONFIG.input && event.info.event === CONFIG.btnevent) {
+            if (event.info.id === CONFIG.input && (event.info.event === CONFIG.btnevent1 || event.info.event === CONFIG.btnevent2) {
                 getCurrentState(CONFIG.ip);
             } else {
                 return true;
