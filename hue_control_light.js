@@ -1,27 +1,19 @@
+/**
+ * @copyright shelly-tools contributors
+ * @license   GNU Affero General Public License (https://www.gnu.org/licenses/agpl-3.0.de.html)
+ * @authors   https://github.com/shelly-tools/shelly-script-examples/graphs/contributors
+ *
+ * This script is intended to toggle on/Off a Light connected to a Phillips HuE Bridge.
+ * 
+ */
+
 let CONFIG = {
     ip: '192.168.178.168', //Hue Bridge IP
-    user: 'Xavjfddg0RDVrimm8uiaYm-KlQHdRT6yxlXdq87n', //Hue Bridge API user
-    light: '1', // Hue Light ID
+    user: 'Y0NXhTgbfcZYk0dSrTB70Va0XSZKFJdUYJcAj4bp', //Hue Bridge API user
+    light: '4', // Hue Light ID
     input1: 0, // Shelly Button ID
     btnevent1: 'single_push' //Shelly Button Event
 };
-
-// Set Switch detached
-Shelly.call("Input.SetConfig", {
-    id: 0,
-    config: {
-        type: "button",
-    },
-});
-
-Shelly.call("Switch.SetConfig", {
-    id: 0,
-    config: {
-        in_mode: "detached",
-        initial_state: "on"
-    },
-});
-
 
 // add an evenHandler 
 Shelly.addEventHandler(
