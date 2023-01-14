@@ -16,7 +16,6 @@ Shelly.addEventHandler(
                 Timer.set(delayedStart * 1000, false, function (ud) {
                   Shelly.call("switch.set",{ id: 0, on: true, toggle_after: 5},function (result, code, msg, ud) {},null);  
                 }, null);
-                Timer.clear();
             } else {
                 return true;
             }
