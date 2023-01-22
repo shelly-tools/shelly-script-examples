@@ -21,3 +21,25 @@ This script is a more complex example how to control a Shelly RGBW or a Shelly D
 cycle_rgbw_colors.js: Color rotation example for Shelly RGBW2/Shelly Duo RGBW
 ===
 The script is a simple example how to rotate colors from a Shelly RGBW2/Shelly Duo RGBW via single push.
+
+
+hue_switch_control_light.js: HuE - Control a light with a Switch
+===
+This script can be used to control a sinlge light (on/off) connetcted to a  HuE Bridge.
+
+
+hue_switch_control_group.js: HuE - Control a group of lights with a Switch
+===
+This script can be used to control a group of lights (on/off) connetcted to a  HuE Bridge.
+
+
+
+hue_button_control_light.js: HuE - Control a light with a push button
+===
+This script can be used to control a light (on/off) connetcted to a  HuE Bridge.
+
+
+hue_button_control_group.js: HuE - Control a group of lights with a push button
+===
+This script can be used to control a group of lights (on/off) connetcted to a  HuE Bridge.
+
