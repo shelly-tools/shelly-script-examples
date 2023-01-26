@@ -2,18 +2,21 @@
 // this is written in mJS to run as a script on a Shelly device (not full ES6!)
 // requires Shelly firmware 0.12 or greater, MQTT and bluetooth enabled.
 
+let debug = false;
+
 let CONFIG = {
     "scan_duration": BLE.Scanner.INFINITE_SCAN,
 };
 
 // MFG code for mopeka devices
 let MOPEKA = "0059";
+
 // Magic numbers from Mopeka developer doc
 let COEF = [ 0.573045, -0.002822, -0.00000535 ];
 
 /**
  * @param timeMs time in ms for for the echo to return
- * @param rawTemp the raw temperatue value in C without the 40 degree offset.
+ * @param rawTemp the raw temperature value in C without the 40 degree offset.
  * @returns depth in mm
  **/
 function getTankLevel(timeMs, rawTemp) {
@@ -61,8 +64,6 @@ let MopekaBLEParser = {
       id: (bleData.at(5) << 16) + (bleData.at(6) << 8) + bleData.at(7),
     };
     
-
-    
     return result;
   }
 };
@@ -74,18 +75,27 @@ function scanCB(ev, res) {
   if (res.manufacturer_data && res.manufacturer_data[MOPEKA]) {
     let tankData = MopekaBLEParser.parseData(res.manufacturer_data[MOPEKA]);
  
-    // Data is only valid if qualioty is >= 2
+    // Bail if no data (unsupported device)
+    if (tankData === null) {
+        return
+    }
+    
+    // Data is only considered valid if quality is >= 2
     let message = JSON.stringify({
       data: tankData,
       rssi: res.rssi,
       addr: res.addr,
       valid: tankData.quality >= 2 ?  true : false,
     });
+      
     let topic = 'mopekaStatus-' + JSON.stringify(tankData.id) + '/status';
+      
     if(MQTT.isConnected()) {
       MQTT.publish(topic, message, 1, true);
-      print(topic);
-      print(message);
+      if (debug) {
+        print(topic);
+        print(message);
+      }
     }
   }
 }
