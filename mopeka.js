@@ -1,4 +1,4 @@
-// Mopeka Untrasonic Propane Tank Guage
+// Mopeka Ultrasonic Propane Tank Guage
 // this is written in mJS to run as a script on a Shelly device (not full ES6!)
 // requires Shelly firmware 0.12 or greater, MQTT and bluetooth enabled.
 
