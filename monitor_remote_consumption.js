@@ -46,7 +46,11 @@ function startMonitor() {
                     url: 'http://' + remoteip + '/status'
                 },
                 function (res, error_code, error_msg, ud) {
-                    if (res.code === 200) {
+                    if (error_code !== 0)
+                    {
+                        // Not read response if there is an error, to avoid that the script stops
+                    }
+                    else if (res.code === 200) {
                         let st = JSON.parse(res.body);
                         let current = st.meters[0].power;
                         if (current > minUsage) {
