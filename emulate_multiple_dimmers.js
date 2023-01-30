@@ -20,6 +20,16 @@ let dimstate = [
     false,
     false,
 ];
+
+let up = [
+    false,
+    false,
+    false,
+    false,
+];
+
+
+
 // add an evenHandler for button type input and various push events
 Shelly.addEventHandler(
     function (event) {
@@ -56,18 +66,32 @@ Shelly.addEventHandler(
                         function (rs, ec, em) { },
                         null
                     );
-                } else if (event.info.event === 'long_push') {
+                } else if (event.info.event === 'long_push' && up[i]) {
                     dimstate[i] = true;
+                    up[i] = false;
                     print("cycle");
                     Shelly.call(
                         "http.get", {
-                        url: 'http://' + dimmer[i] + '/light/0?dim=cycle'
+                        url: 'http://' + dimmer[i] + '/light/0?dim=down&step=100'
                     },
                         function (rs, ec, em) { },
                         null
                     );
 
-                } else {
+                } else if (event.info.event === 'long_push' && up[i] === false) {
+                    dimstate[i] = true;
+                    up[i] = true;
+                    print("cycle");
+                    Shelly.call(
+                        "http.get", {
+                        url: 'http://' + dimmer[i] + '/light/0?dim=up&step=100'
+                    },
+                        function (rs, ec, em) { },
+                        null
+                    );
+                }
+                
+                else {
                     return true;
                 }
             }
