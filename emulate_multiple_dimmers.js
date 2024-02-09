@@ -4,15 +4,15 @@
  * @authors   https://github.com/shelly-tools/shelly-script-examples/graphs/contributors
  *
  * This script is intended to remote control a Shelly Dimmer / Dimmer2 and emulates the locally conencted button.
- * short_press = on/off toggle, double_press = on with 100% brightness, long_press cylce between dimming and brightening.
+ * short_press = on/off toggle, double_press = toggle between 15% and 100% brightness, long_press cylce between dimming and brightening.
  */
 
 // Array of dimmers to be controlled
 let dimmer = [
-    '192.168.178.166', // dimmer controlled with button 0 
-    '192.168.178.240', // dimmer controlled with button 1 
+    '192.168.178.166', // dimmer controlled with button 0
+    '192.168.178.240', // dimmer controlled with button 1
 ];
-// CONFIG END 
+// CONFIG END
 
 let dimstate = [
     false,
@@ -28,7 +28,12 @@ let up = [
     false,
 ];
 
-
+let dbl_up = [
+    true,
+    true,
+    true,
+    true,
+];
 
 // add an evenHandler for button type input and various push events
 Shelly.addEventHandler(
@@ -58,13 +63,23 @@ Shelly.addEventHandler(
                         function (rs, ec, em) { },
                         null
                     );
-                } else if (event.info.event === 'double_push') {
+                } else if (event.info.event === 'double_push' && dbl_up[i]) {
+                    dbl_up[i] = false;
                     Shelly.call(
-                        "http.get", {
-                        url: 'http://' + dimmer[i] + '/light/0?turn=on&brightness=100'
-                    },
-                        function (rs, ec, em) { },
-                        null
+                      "http.get", {
+                          url: 'http://' + dimmer[i] + '/light/0?turn=on&brightness=100'
+                      },
+                      function (rs, ec, em) { },
+                      null
+                    );
+                } else if (event.info.event === 'double_push' && dbl_up[i] === false) {
+                    dbl_up[i] = true;
+                    Shelly.call(
+                      "http.get", {
+                          url: 'http://' + dimmer[i] + '/light/0?turn=on&brightness=15'
+                      },
+                      function (rs, ec, em) { },
+                      null
                     );
                 } else if (event.info.event === 'long_push' && up[i]) {
                     dimstate[i] = true;
@@ -90,7 +105,7 @@ Shelly.addEventHandler(
                         null
                     );
                 }
-                
+
                 else {
                     return true;
                 }
